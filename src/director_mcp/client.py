@@ -125,6 +125,8 @@ class DirectorClient:
         params = {}
         if host:
             params["host"] = host
+            # Director needs the host in the body, the query parameter alone gives 422
+            service_data = {**service_data, "host": host}
         if allow_overrides:
             params["allowOverrides"] = "1"
         return self._post("service", service_data, params=params)
